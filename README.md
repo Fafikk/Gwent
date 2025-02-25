@@ -4,6 +4,7 @@
 This is a **multiplayer-only** fork using node.js for the server. Although I have not tested it extensevely, the server *should* allow for multiple simultaneous games.
 
 ## Features
+- Dynamic website translating
 
 ## How to play multiplayer
 
