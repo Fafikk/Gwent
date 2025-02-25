@@ -8,11 +8,17 @@ i18next
       backend: {
         loadPath: "./locales/{{lng}}/translation.json",
       },
+      detection: {
+        order: ['navigator'],
+        lookupFromPathIndex: 0,
+        caches: ['localStorage', 'cookie'],
+      }
     },
     function () {
       updatePageContent();
     }
   );
+
 
 function updatePageContent() {
   document.querySelectorAll("[data-i18n]").forEach(function (element) {
