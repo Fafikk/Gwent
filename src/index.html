@@ -1,9 +1,11 @@
 <!doctype html>
-
-<html lang="en-US">
-
+<html lang="en-EN">
 <head>
-	<title>Gwent Classic - Multiplayer</title>
+	<script src="https://unpkg.com/i18next@latest/i18next.min.js"></script>
+  	<script src="https://unpkg.com/i18next-http-backend@latest/i18nextHttpBackend.min.js"></script>
+  	<script src="https://unpkg.com/i18next-browser-languagedetector@latest/i18nextBrowserLanguageDetector.min.js"></script>
+	<script src="i18n.js"></script>
+	<title data-i18n="site_title">Gwent Classic</title>
 	<meta charset="utf-8" />
 	<meta name="author" content="Arun Sundaram, Leo-Felde" />
 	<meta name="description" content="Play the original Gwent minigame from The Witcher 3 against your friends in your browser!" />
@@ -11,19 +13,14 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<link rel="stylesheet" type="text/css" href="style.css" />
 </head>
-
 <body>
 	<div class = "abs" id = "very_start_bg1"></div>
 	<div class = "abs" id = "very_start_bg2">
 		<div id = "very_start" class = "abs" style = "padding-top:55%">
-			UP FOR
-			<br />
-			A FEW ROUNDS
-			<br />
-			OF GWENT?
-			<br /><br />
-			<font id = "load_text">Loading...</font>
-			<button class = "start-game_class" id = "button_start" style = "display:none">Click here to begin</button>
+			<span data-i18n="welcome_message">UP FOR A FEW ROUNDS OF GWENT?</span>
+			<br>
+			<font id = "load_text" data-i18n="loading_text">Loading...</font>
+			<button class = "start-game_class" id = "button_start" style = "display:none" data-i18n="begin_button">Click here to begin</button>
 		</div>
 	</div>
 

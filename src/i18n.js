@@ -1,16 +1,26 @@
-import i18next from "i18next";
-import HttpApi from "i18next-http-backend";
-import LanguageDetector from "i18next-browser-languagedetector";
-
 i18next
-  .use(HttpApi)
-  .use(LanguageDetector)
-  .init({
-    fallbackLng: "en",
-    debug: true,
-    backend: {
-      loadPath: "/locales/{{lng}}/translation.json"
+  .use(i18nextHttpBackend)
+  .use(i18nextBrowserLanguageDetector)
+  .init(
+    {
+      fallbackLng: "en",
+      debug: true,
+      backend: {
+        loadPath: "./locales/{{lng}}/translation.json",
+      },
+    },
+    function () {
+      updatePageContent();
     }
-  });
+  );
 
-export default i18next;
+function updatePageContent() {
+  document.querySelectorAll("[data-i18n]").forEach(function (element) {
+    const key = element.getAttribute("data-i18n");
+    element.innerText = i18next.t(key);
+  });
+}
+
+function changeLanguage(lng) {
+  i18next.changeLanguage(lng, updatePageContent);
+}

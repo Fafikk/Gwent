@@ -508,8 +508,8 @@ html {
 }
 
 #carousel>:nth-child(1) {
-	wdith: 100%;
-	heigth: 100%;
+	width: 100%;
+	height: 100%;
 	padding: 11.5% 10%;
 	display: flex;
 	align-items: flex-start;
@@ -833,7 +833,6 @@ html {
 	width: 63%;
 	margin-bottom: -80%;
 	display: flex;
-	flex-items: center;
 	justify-content: center;
 }
 
@@ -2207,6 +2206,9 @@ html {
 	color: #DDD;
 	background-color: rgb(20, 20, 20);
 	border: .1vw ridge rgb(30, 30, 30);
+	padding: 5px;
+	margin-top: 10px;
+	font-size: 20px;
 }
 
 .card-contianer-title {
@@ -2236,7 +2238,7 @@ html {
 	display: inline-block;
 	position: relative;
 	transition: margin-bottom 0.05s, margin-left .25s, margin-right .25s, transform 0.5s;
-	z-index=1;
+	z-index: 1;
 }
 
 .deck-card .card {
@@ -2262,7 +2264,7 @@ html {
 	top: 13%;
 	left: 7%;
 	width: 50%;
-	heighth: 50%;
+	height: 50%;
 	font-size: 1vw;
 	font-weight: 700;
 	color: #000;
