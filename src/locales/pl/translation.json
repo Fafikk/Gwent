@@ -52,5 +52,162 @@
             "name": "Skellige",
             "description": "Dwie przypadkowe jednostki z cmentarza są umieszczane na stole na początku trzeciej rundy."
         }
+    },
+    "abilities": {
+        "clear": {
+            "name": "Czyste niebo",
+            "description": "Usuwa efekty wszystkich kart pogodowych (Trzaskający Mróz, Gęsta Mgła i Ulewny Deszcz)."
+        },
+        "frost": {
+            "name": "Trzaskający mróz",
+            "description": "Ustawia siłę wszystkich jednostek bliskiego starcia na 1 dla obu graczy."
+        },
+        "fog": {
+            "name": "Gęsta mgła",
+            "description": "Ustawia siłę wszystkich jednostek łuczniczych na 1 dla obu graczy."
+        },
+        "rain": {
+            "name": "Ulewny deszcz",
+            "description": "Ustawia siłę wszystkich jednostek oblężniczych na 1 dla obu graczy."
+        },
+        "storm": {
+            "name": "Burza Skellige",
+            "description": "Zmniejsza siłę wszystkich jednostek łuczniczych i oblężniczych do 1."
+        },
+        "hero": {
+            "name": "Bohater",
+            "description": "Nie jest wrażliwy na żadne karty specjalnei ani umiejętności."
+        },
+        "decoy": {
+            "name": "Manekin do ćwiczeń",
+            "description": "Zamień z kartą na polu bitwy, aby zwrócić ją do swojej ręki."
+        },
+        "horn": {
+            "name": "Róg dowódcy",
+            "description": "Podwaja siłę wszystkich kjednostek w tym rzędzie. Maksymalnie 1 na rząd."
+        },
+        "mardroeme": {
+            "name": "Mardroeme",
+            "description": "Wyzwala transformację wszystkich kart Berserkera w tym samym rzędzie."
+        },
+        "berserker": {
+            "name": "Berserker",
+            "description": "Przekształca się w niedźwiedzia, gdy karta Mardroeme znajduje się w jego rzędzie."
+        },
+        "scorch": {
+            "name": "Pożoga",
+            "description": "Niszczy najsilniejsze karty na polu bitwy."
+        },
+        "scorch_c": {
+            "name": "Pożoga - Walka wręcz",
+            "description": "Zniszcz najsilniejszą jednostkę bliskiego starcia przeciwnika, jeśli łączna siła wszystkich jego jednostek bliskiego starcia wynosi 10 lub więcej."
+        },
+        "scorch_r": {
+            "name": "Pożoga - Walka dystansowa",
+            "description": "Zniszcz najsilniejszą jednostkę łuczniczą przeciwnika, jeśli łączna siła wszystkich jego jednostek łuczniczych wynosi 10 lub więcej."
+        },
+        "scorch_s": {
+            "name": "Pożoga - Walka oblężnicza",
+            "description": "Zniszcz najsilniejszą jednostkę oblężniczą przeciwnika, jeśli łączna siła wszystkich jego jednostek oblężniczych wynosi 10 lub więcej."
+        },
+        "agile": {
+            "name": "Zwinny",
+            "description": "Może być umieszczony w rzędzie jednostek bliskiego starcia lub łuczniczych. Nie można go przenieść po umieszczeniu."
+        },
+        "muster": {
+            "name": "Zbiórka",
+            "description": "Znajdź wszystkie karty o tej samej nazwie w swojej talii i zagraj je natychmiast."
+        },
+        "spy": {
+            "name": "Szpieg",
+            "description": "Umieść na polu bitwy przeciwnika (liczy się do całkowitej siły przeciwnika) i dobierz 2 karty ze swojej talii."
+        },
+        "medic": {
+            "name": "Medyk",
+            "description": "Wybierz jedną kartę ze swojego stosu kart odrzuconych i zagraj ją natychmiast (bez bohaterów ani kart specjalnych)."
+        },
+        "morale": {
+            "name": "Morale",
+            "description": "Dodaje +1 do wszystkich jednostek w rzędzie (z wyjątkiem siebie)."
+        },
+        "bond": {
+            "name": "Więź",
+            "description": "Umieść obok karty o tej samej nazwie, aby podwoić siłę obu kart."
+        },
+        "avenger": {
+            "name": "Mściciel",
+            "description": "Gdy ta karta zostanie usunięta z pola bitwy, przywołuje potężną nową kartę jednostki na jej miejsce."
+        },
+        "avenger_kambi": {
+            "name": "Mściciel",
+            "description": "Gdy ta karta zostanie usunięta z pola bitwy, przywołuje potężną nową kartę jednostki na jej miejsce."
+        },
+        "foltest_king": {
+            "description": "Wybierz kartę Gęstej Mgły ze swojej talii i zagraj ją natychmiast."
+        },
+        "foltest_lord": {
+            "description": "Usuń wszystkie efekty pogodowe (wynikające z kart Trzaskającego Mrozu, Ulewnego Deszczu lub Gęstej Mgły) z pola bitwy."
+        },
+        "foltest_siegemaster": {
+            "description": "Podwaja siłę wszystkich twoich jednostek oblężniczych (chyba że w tym rzędzie znajduje się również Róg Dowódcy)."
+        },
+        "foltest_steeelforged": {
+            "description": "Zniszcz najsilniejszą jednostkę oblężniczą przeciwnika, jeśli łączna siła wszystkich jego jednostek oblężniczych wynosi 10 lub więcej."
+        },
+        "fostest_son": {
+            "description": "Zniszcz najsilniejszą jednostkę łuczniczą, jeśli łączna siła wszystkich jego jednostek łuczniczych wynosi 10 lub więcej."
+        },
+        "emhyr_imperial": {
+            "description": "Znajdź kartę Ulewnego Deszczu w swojej talii i zagraj ją natychmiast."
+        },
+        "emhyr_emperor": {
+            "description": "Spójrz na 3 losowe karty z ręki przeciwnika."
+        },
+        "emhyr_whiteflame": {
+            "description": "Zablokuj zdolność dowódcy przeciwnika."
+        },
+        "emhyr_relentless": {
+            "description": "Dobierz kartę ze stosu kart odrzuconych przeciwnika."
+        },
+        "emhyr_invader": {
+            "description": "Medyk nie może wybrać, którą kartę ożywić i dobiera losową kartę z kart odrzuconych (dotyczy obu graczy)."
+        },
+        "eredin_commander": {
+            "description": "Podwaja siłę wszystkich twoich jednostek bliskiego starcia (chyba że w tym rzędzie znajduje się również Róg Dowódcy)."
+        },
+        "eredin_bringer_of_death": {
+            "name": "Eredin: Niosący Śmierć",
+            "description": "Przywróć kartę ze swojego stosu kart odrzuconych do ręki."
+        },
+        "eredin_destroyer": {
+            "description": "Odrzuć 2 karty i dobierz 1 kartę według własnego wyboru ze swojej talii."
+        },
+        "eredin_king": {
+            "description": "Wybierz dowolną kartę pogodową ze swojej talii i zagraj ją natychmiast."
+        },
+        "eredin_treacherous": {
+            "description": "Podwaja siłę wszystkich kart szpiegów (dotyczy obu graczy)."
+        },
+        "francesca_queen": {
+            "description": "Zniszcz najsilniejszą jednostkę bliskiego starcia przeciwnika, jeśli łączna siła wszystkich jego jednostek bliskiego starcia wynosi 10 lub więcej."
+        },
+        "francesca_beautiful": {
+            "description": "Podwaja siłę wszystkich twoich jednostek łuczniczych (chyba że w tym rzędzie znajduje się również Róg Dowódcy)."
+        },
+        "francesca_daisy": {
+            "description": "Dobierz dodatkową kartę na początku bitwy."
+        },
+        "francesca_pureblood": {
+            "description": "Znajdź w swojej talii Trzaskającego Mrozu i zagraj ją natychmiast."
+        },
+        "francesca_hope": {
+            "description": "Przenieś zwinne jednostki do dowolnego rzędu, aby zmaksymalizować ich siłę (nie przenosi jednostek już znajdujących się w optymalnym rzędzie)."
+        },
+        "crach_an_craite": {
+            "description": "Przetasuj wszystkie karty z kart odrzuconych każdego gracza z powrotem do ich talii."
+        },
+        "king_bran": {
+            "description": "Jednostki tracą tylko połowę swojej siły w złych warunkach pogodowych."
+        }
     }
 }

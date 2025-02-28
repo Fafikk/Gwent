@@ -1,50 +1,52 @@
 "use strict"
 
+const { default: i18next } = require("i18next");
+
 var ability_dict = {
 	clear: {
-		name: "Clear Weather",
-		description: "Removes all Weather Cards (Biting Frost, Impenetrable Fog and Torrential Rain) effects. "
+		name: i18next.t("abilities.clear.name"),
+		description: i18next.t("abilities.clear.description"),
 	},
 	frost: {
-		name: "Biting Frost",
-		description: "Sets the strength of all Close Combat cards to 1 for both players. "
+		name: i18next.t("abilities.frost.name"),
+		description: i18next.t("abilities.frost.description")
 	},
 	fog: {
-		name: "Impenetrable Fog",
-		description: "Sets the strength of all Ranged Combat cards to 1 for both players. "
+		name: i18next.t("abilities.fog.name"),
+		description: i18next.t("abilities.fog.description")
 	},
 	rain: {
-		name: "Torrential Rain",
-		description: "Sets the strength of all Siege Combat cards to 1 for both players. "
+		name: i18next.t("abilities.rain.name"),
+		description: i18next.t("abilities.rain.description")
 	},
 	storm: {
-		name: "Skellige Storm",
-		description: "Reduces the Strength of all Range and Siege Units to 1. "
+		name: i18next.t("abilities.storm.name"),
+		description: i18next.t("abilities.storm.description")
 	},
 	hero: {
-		name: "hero",
-		description: "Not affected by any Special Cards or abilities. "
+		name: i18next.t("abilities.hero.name"),
+		description: i18next.t("abilities.hero.description")
 	},
 	decoy: {
-		name: "Decoy",
-		description: "Swap with a card on the battlefield to return it to your hand. "
+		name: i18next.t("abilities.decoy.name"),
+		description: i18next.t("abilities.decoy.description")
 	},
 	horn: {
-		name: "Commander's Horn",
-		description: "Doubles the strength of all unit cards in that row. Limited to 1 per row. ",
+		name: i18next.t("abilities.horn.name"),
+		description: i18next.t("abilities.horn.description"),
 		placed: async card => await card.animate("horn")
 	},
 	mardroeme: {
-		name: "Mardroeme",
-		description: "Triggers transformation of all Berserker cards on the same row. ",
+		name: i18next.t("abilities.mardroeme.name"),
+		description: i18next.t("abilities.mardroeme.description"),
 		placed: async (card, row) => {
 			let berserkers = row.findCards(c => c.abilities.includes("berserker"));
 			await Promise.all(berserkers.map(async c => await ability_dict["berserker"].placed(c, row)));
 		}
 	},
 	berserker: {
-		name: "Berserker",
-		description: "Transforms into a bear when a Mardroeme card is on its row. ",
+		name: i18next.t("abilities.berserker.name"),
+		description: i18next.t("abilities.berserker.description"),
 		placed: async (card, row) => {
 			if (row.effects.mardroeme === 0)
 				return;
@@ -54,8 +56,8 @@ var ability_dict = {
 		}
 	},
 	scorch: {
-		name: "Scorch",
-		description: "Discard after playing. Kills the strongest card(s) on the battlefield. ",
+		name: i18next.t("abilities.scorch.name"),
+		description: i18next.t("abilities.scorch.description"),
 		activated: async card => {	
 			await ability_dict["scorch"].placed(card);
 			await board.toGrave(card, card.holder.hand);
@@ -75,27 +77,27 @@ var ability_dict = {
 		}
 	},
 	scorch_c: {
-		name: "Scorch - Close Combat",
-		description: "Destroy your enemy's strongest Close Combat unit(s) if the combined strength of all his or her Close Combat units is 10 or more. ",
+		name: i18next.t("abilities.scorch_c.name"),
+		description: i18next.t("abilities.scorch_c.description"),
 		placed: async (card) => await board.getRow(card, "close", card.holder.opponent()).scorch()
 	},
 	scorch_r: {
-		name: "Scorch - Ranged",
-		description: "Destroy your enemy's strongest Ranged Combat unit(s) if the combined strength of all his or her Ranged Combat units is 10 or more. ",
+		name: i18next.t("abilities.scorch_r.name"),
+		description: i18next.t("abilities.scorch_r.description"),
 		placed: async (card) => await board.getRow(card, "ranged", card.holder.opponent()).scorch()
 	},
 	scorch_s: {
-		name: "Scorch - Siege",
-		description: "Destroys your enemy's strongest Siege Combat unit(s) if the combined strength of all his or her Siege Combat units is 10 or more. ",
+		name: i18next.t("abilities.scorch_s.name"),
+		description: i18next.t("abilities.scorch_s.description"),
 		placed: async (card) => await board.getRow(card, "siege", card.holder.opponent()).scorch()
 	},
 	agile: {
-		name:"agile", 
-		description: "Can be placed in either the Close Combat or the Ranged Combat row. Cannot be moved once placed. "
+		name: i18next.t("abilities.agile.name"),
+		description: i18next.t("abilities.agile.description")
 	},
 	muster: {
-		name:"muster", 
-		description: "Find any cards with the same name in your deck and play them instantly. ",
+		name: i18next.t("abilities.muster.name"),
+		description: i18next.t("abilities.muster.description"),
 		placed: async (card) => {
 			let i = card.name.indexOf('-');
 			let cardName = i === -1 ?  card.name : card.name.substring(0, i);
@@ -109,8 +111,8 @@ var ability_dict = {
 		}
 	},
 	spy: {
-		name: "spy",
-		description: "Place on your opponent's battlefield (counts towards your opponent's total) and draw 2 cards from your deck. ",
+		name: i18next.t("abilities.spy.name"),
+		description: i18next.t("abilities.spy.description"),
 		placed: async (card) => {
 			await card.animate("spy");
 			for (let i=0;i<2;i++) {
@@ -121,8 +123,8 @@ var ability_dict = {
 		}
 	},
 	medic: {
-		name: "medic",
-		description: "Choose one card from your discard pile and play it instantly (no Heroes or Special Cards). ",
+		name: i18next.t("abilities.medic.name"),
+		description: i18next.t("abilities.medic.description"),
 		placed: async (card) => {
 			let grave = board.getRow(card, "grave", card.holder);
 			let units = card.holder.grave.findCards(c => c.isUnit());
@@ -158,13 +160,13 @@ var ability_dict = {
 		}
 	},
 	morale: {
-		name: "Morale",
-		description: "Adds +1 to all units in the row (excluding itself). ",
+		name: i18next.t("abilities.morale.name"),
+		description: i18next.t("abilities.morale.description"),
 		placed: async card => await card.animate("morale")
 	},
 	bond: {
-		name: "Tight Bond",
-		description: "Place next to a card with the same name to double the strength of both cards. ",
+		name: i18next.t("abilities.bond.name"),
+		description: i18next.t("abilities.bond.description"),
 		placed: async card => {
 			let bonds = board.getRow(card, card.row, card.holder).findCards(c => c.name === card.name);
 			if (bonds.length > 1)
@@ -172,8 +174,8 @@ var ability_dict = {
 		}
 	},
 	avenger: {
-		name: "Avenger",
-		description: "When this card is removed from the battlefield, it summons a powerful new Unit Card to take its place. ",
+		name: i18next.t("abilities.avenger.name"),
+		description: i18next.t("abilities.avenger.description"),
 		removed: async (card) => {
 			let bdf = new Card(card_dict[21], card.holder);
 			bdf.removed.push( () => setTimeout( () => bdf.holder.grave.removeCard(bdf), 1001) );
@@ -182,8 +184,8 @@ var ability_dict = {
 		weight: () => 50
 	},
 	avenger_kambi: {
-		name: "Avenger",
-		description: "When this card is removed from the battlefield, it summons a powerful new Unit Card to take its place. ",
+		name: i18next.t("abilities.avenger_kambi.name"),
+		description: i18next.t("abilities.avenger_kambi.description"),
 		removed: async card => {
 			let bdf = new Card(card_dict[196], card.holder);
 			bdf.removed.push( () => setTimeout( () => bdf.holder.grave.removeCard(bdf), 1001) );
@@ -192,7 +194,7 @@ var ability_dict = {
 		weight: () => 50
 	},
 	foltest_king: {
-		description: "Pick an Impenetrable Fog card from your deck and play it instantly.",
+		description: i18next.t("abilities.foltest_king.description"),
 		activated: async card => {
 			let out = card.holder.deck.findCard(c => c.name === "Impenetrable Fog");
 			if (out)
@@ -201,7 +203,7 @@ var ability_dict = {
 		weight: (card, ai) => ai.weightWeatherFromDeck(card, "fog")
 	},
 	foltest_lord: {
-		description: "Clear any weather effects (resulting from Biting Frost, Torrential Rain or Impenetrable Fog cards) in play.",
+		description: i18next.t("abilities.foltest_lord.description"),
 		activated: async () => {
 			tocar("clear", false);
 			await weather.clearWeather();
@@ -209,22 +211,22 @@ var ability_dict = {
 		weight: (card, ai) =>  ai.weightCard( {row:"weather", name:"Clear Weather"} )
 	},
 	foltest_siegemaster: {
-		description: "Doubles the strength of all your Siege units (unless a Commander's Horn is also present on that row).",
+		description: i18next.t("abilities.foltest_siegemaster.description"),
 		activated: async card => await board.getRow(card, "siege", card.holder).leaderHorn(),
 		weight: (card, ai) => ai.weightHornRow(card, board.getRow(card, "siege", card.holder))
 	},
 	foltest_steelforged: {
-		description: "Destroy your enemy's strongest Siege unit(s) if the combined strength of all his or her Siege units is 10 or more.",
+		description: i18next.t("abilities.foltest_steelforged.description"),
 		activated: async card => await ability_dict["scorch_s"].placed(card),
 		weight: (card, ai, max) => ai.weightScorchRow(card, max, "siege")
 	},
 	foltest_son: {
-		description: "Destroy your enemy's strongest Ranged Combat unit(s) if the combined strength of all his or her Ranged Combat units is 10 or more.",
+		description: i18next.t("abilities.foltest_son.description"),
 		activated: async card => await ability_dict["scorch_r"].placed(card),
 		weight: (card, ai, max) => ai.weightScorchRow(card, max, "ranged")
 	},
 	emhyr_imperial: {
-		description: "Pick a Torrential Rain card from your deck and play it instantly.",
+		description: i18next.t("abilities.emhyr_imperial.description"),
 		activated: async card => {
 			let out = card.holder.deck.findCard(c => c.name === "Torrential Rain");
 			if (out)
@@ -233,7 +235,7 @@ var ability_dict = {
 		weight: (card, ai) => ai.weightWeatherFromDeck(card, "rain")
 	},
 	emhyr_emperor: {
-		description: "Look at 3 random cards from your opponent's hand.",
+		description: i18next.t("abilities.emhyr_emperor.description"),
 		activated: async card => {
 			// Wait for the oponent to close the carousel
 			if (card.holder.controller instanceof ControllerOponent) {
@@ -260,10 +262,10 @@ var ability_dict = {
 		}
 	},
 	emhyr_whiteflame: {
-		description: "Cancel your opponent's Leader Ability."
+		description: i18next.t("abilities.emhyr_whiteflame.description")
 	},
 	emhyr_relentless: {
-		description: "Draw a card from your opponent's discard pile.",
+		description: i18next.t("abilities.emhyr_relentless.description"),
 		activated: async card => {
 			let grave = board.getRow(card, "grave", card.holder.opponent());
 			if (grave.findCards(c => c.isUnit()).length === 0)
@@ -298,17 +300,17 @@ var ability_dict = {
 		weight: (card, ai, max, data) => ai.weightMedic(data, 0, card.holder.opponent())
 	},
 	emhyr_invader: {
-		description: "Medics cannot choose which card to revive and draw a random one from the graveyard (affects both players).",
+		description: i18next.t("abilities.emhyr_invader.description"),
 		gameStart: () => game.randomRespawn = true
 	},
 	eredin_commander: {
-		description: "Double the strength of all your Close Combat units (unless a Commander's horn is 	also present on that row).",
+		description: i18next.t("abilities.eredin_commander.description"),
 		activated: async card => await board.getRow(card, "close", card.holder).leaderHorn(),
 		weight: (card, ai) => ai.weightHornRow(card, board.getRow(card, "close", card.holder))
 	},
 	eredin_bringer_of_death: {
-		name: "Eredin : Bringer of Death",
-		description: "Restore a card from your discard pile to your hand.",
+		name: i18next.t("abilities.eredin_bringer_of_death.name"),
+		description: i18next.t("abilities.eredin_bringer_of_death.description"),
 		activated: async card => {
 			if (!card.holder.grave.cards.length) {
 				card.holder.tag === "me" ? player_me.endRound() : player_op.endRound()
@@ -340,7 +342,7 @@ var ability_dict = {
 		weight: (card, ai, max, data) => ai.weightMedic(data, 0, card.holder)
 	},
 	eredin_destroyer: {
-		description: "Discard 2 card and draw 1 card of your choice from your deck.",
+		description: i18next.t("abilities.eredin_destroyer.description"),
 		activated: async (card) => {
 			let hand = board.getRow(card, "hand", card.holder);
 			let deck = board.getRow(card, "deck", card.holder);
@@ -382,7 +384,7 @@ var ability_dict = {
 		}
 	},
 	eredin_king: {
-		description: "Pick any weather card from your deck and play it instantly.",
+		description: i18next.t("abilities.eredin_king.description"),
 		activated: async card => {
 			let deck = board.getRow(card, "deck", card.holder);
 
@@ -422,21 +424,21 @@ var ability_dict = {
 		}			
 	},
 	eredin_treacherous: {
-		description: "Doubles the strength of all spy cards (affects both players).",
+		description: i18next.t("abilities.eredin_treacherous.description"),
 		gameStart: () => game.doubleSpyPower = true
 	},
 	francesca_queen: {
-		description: "Destroy your enemy's strongest Close Combat unit(s) if the combined strength of all his or her Close Combat units is 10 or more.",
+		description: i18next.t("abilities.francesca_queen.description"),
 		activated: async card => await ability_dict["scorch_c"].placed(card),
 		weight: (card, ai, max) => ai.weightScorchRow(card, max, "close")
 	},
 	francesca_beautiful: {
-		description: "Doubles the strength of all your Ranged Combat units (unless a Commander's Horn is also present on that row).",
+		description: i18next.t("abilities.francesca_beautiful.description"),
 		activated: async card => await board.getRow(card, "ranged", card.holder).leaderHorn(),
 		weight: (card, ai) => ai.weightHornRow(card, board.getRow(card, "ranged", card.holder))
 	},
 	francesca_daisy: {
-		description: "Draw an extra card at the beginning of the battle.",
+		description: i18next.t("abilities.francesca_daisy.description"),
 		placed: card => game.gameStart.push( () => {
 			let draw = card.holder.deck.removeCard(0);
 			card.holder.hand.addCard( draw );
@@ -444,7 +446,7 @@ var ability_dict = {
 		})
 	},
 	francesca_pureblood: {
-		description: "Pick a Biting Frost card from your deck and play it instantly.",
+		description: i18next.t("abilities.francesca_pureblood.description"),
 		activated: async card => {
 			let out = card.holder.deck.findCard(c => c.name === "Biting Frost");
 			if (out)
@@ -453,7 +455,7 @@ var ability_dict = {
 		weight: (card, ai) => ai.weightWeatherFromDeck(card, "frost")
 	},
 	francesca_hope: {
-		description: "Move agile units to whichever valid row maximizes their strength (don't move units already in optimal row).",
+		description: i18next.t("abilities.francesca_hope.description"),
 		activated: async card => {
 			let close = board.getRow(card, "close");
 			let ranged =  board.getRow(card, "ranged");
@@ -478,7 +480,7 @@ var ability_dict = {
 		}
 	},
 	crach_an_craite: {
-		description: "Shuffle all cards from each player's graveyard back into their decks.",
+		description: i18next.t("abilities.crach_an_craite.description"),
 		activated: async card => {
 			Promise.all(card.holder.grave.cards.map(c => board.toDeck(c, card.holder.grave)));
 			await Promise.all(card.holder.opponent().grave.cards.map(c => board.toDeck(c, card.holder.opponent().grave)));
@@ -498,7 +500,7 @@ var ability_dict = {
 		}
 	},
 	king_bran: {
-		description: "Units only lose half their Strength in bad weather conditions.",
+		description: i18next.t("abilities.king_bran.description"),
 		placed: card => board.row.filter((c,i) => card.holder === player_me ^ i<3).forEach(r => r.halfWeather = true)
 	}
 };
