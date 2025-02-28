@@ -151,10 +151,10 @@
         "foltest_siegemaster": {
             "description": "Doubles the strength of all your Siege units (unless a Commander's Horn is also present on that row)."
         },
-        "foltest_steeelforged": {
+        "foltest_steelforged": {
             "description": "Destroy your enemy's strongest Siege unit(s) if the combined strength of all his or her Siege units is 10 or more."
         },
-        "fostest_son": {
+        "foltest_son": {
             "description": "Destroy your enemy's strongest Ranged Combat unit(s) if the combined strength of all his or her Ranged Combat units is 10 or more."
         },
         "emhyr_imperial": {

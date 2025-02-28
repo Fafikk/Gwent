@@ -151,10 +151,10 @@
         "foltest_siegemaster": {
             "description": "Podwaja siłę wszystkich twoich jednostek oblężniczych (chyba że w tym rzędzie znajduje się również Róg Dowódcy)."
         },
-        "foltest_steeelforged": {
+        "foltest_steelforged": {
             "description": "Zniszcz najsilniejszą jednostkę oblężniczą przeciwnika, jeśli łączna siła wszystkich jego jednostek oblężniczych wynosi 10 lub więcej."
         },
-        "fostest_son": {
+        "foltest_son": {
             "description": "Zniszcz najsilniejszą jednostkę łuczniczą, jeśli łączna siła wszystkich jego jednostek łuczniczych wynosi 10 lub więcej."
         },
         "emhyr_imperial": {

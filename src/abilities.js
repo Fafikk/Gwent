@@ -1,7 +1,5 @@
 "use strict"
 
-const { default: i18next } = require("i18next");
-
 var ability_dict = {
 	clear: {
 		name: i18next.t("abilities.clear.name"),
