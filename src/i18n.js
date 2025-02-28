@@ -1,7 +1,3 @@
-import i18next from 'https://cdn.jsdelivr.net/npm/i18next@21.6.10/+esm';
-import i18nextHttpBackend from 'https://cdn.jsdelivr.net/npm/i18next-http-backend@1.4.0/+esm';
-import i18nextBrowserLanguageDetector from 'https://cdn.jsdelivr.net/npm/i18next-browser-languagedetector@6.1.3/+esm';
-
 i18next
   .use(i18nextHttpBackend)
   .use(i18nextBrowserLanguageDetector)
@@ -21,7 +17,29 @@ i18next
     function () {
       updatePageContent();
     }
-  );
+  ).then(() => {
+    console.log("i18next initialized!");
+
+    const scripts = [
+      "cards.js",
+      "decks.js",
+      "abilities.js",
+      "factions.js",
+      "gwent.js",
+      "session.js"
+    ];
+
+    function loadScripts(scripts) {
+      scripts.forEach(src => {
+        const script = document.createElement("script");
+        script.src = src;
+        script.type = "text/javascript";
+        document.body.appendChild(script);
+      });
+    }
+
+    loadScripts(scripts);
+  });
 
 function updatePageContent() {
   document.querySelectorAll("[data-i18n]").forEach(function (element) {
@@ -33,6 +51,3 @@ function updatePageContent() {
 function changeLanguage(lng) {
   i18next.changeLanguage(lng, updatePageContent);
 }
-
-export default i18next;
-export { changeLanguage };

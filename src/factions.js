@@ -2,7 +2,7 @@
 
 var factions = {
 	realms: {
-		name: "Northern Realms",
+		name: i18next.t("factions.realms.name"),
 		factionAbility: player => game.roundStart.push( async () => {
 			if (game.roundCount > 1 && game.roundHistory[game.roundCount-2].winner === player) {
 				player.deck.draw(player.hand);
@@ -10,14 +10,14 @@ var factions = {
 			}
 			return false;
 		}),
-		description: "Draw a card from your deck whenever you win a round."
+		description: i18next.t("factions.realms.description")
 	},
 	nilfgaard: {
-		name: "Nilfgaardian Empire",
-		description: "Wins any round that ends in a draw."
+		name: i18next.t("factions.nilfgaard.name"),
+		description: i18next.t("factions.nilfgaard.description"),
 	},
 	monsters: {
-		name: "Monsters",
+		name: i18next.t("factions.monsters.name"),
 		factionAbility: player => game.roundEnd.push( () => {
 			let units = board.row.filter( (r,i) => player === player_me ^ i < 3)
 				.reduce((a,r) => r.cards.filter(c => c.isUnit()).concat(a), []);
@@ -32,10 +32,10 @@ var factions = {
 			});
 			return false;
 		}),
-		description: "Keeps a random Unit Card out after each round."
+		description: i18next.t("factions.monsters.description")
 	},
 	scoiatael: {
-		name: "Scoia'tael",
+		name: i18next.t("factions.scoiatael.name"),
 		factionAbility: player => game.gameStart.push( async () => {
 			if (player === player_me) {
 				await ui.popup("Go First", () => game.firstPlayer = player, "Let Opponent Start", () => game.firstPlayer = player.opponent(), "Would you like to go first?", "The Scoia'tael faction perk allows you to decide who will get to go first.");
@@ -43,10 +43,10 @@ var factions = {
 			}
 			return true;
 		}),
-		description: "Decides who takes first turn."
+		description: i18next.t("factions.scoiatael.description")
 	},
 	skellige: {
-		name: "Skellige",
+		name: i18next.t("factions.skellige.name"),
 		factionAbility: player => game.roundStart.push( async () => {
 			if (game.roundCount != 3)
 				return false;
@@ -54,6 +54,6 @@ var factions = {
 			await Promise.all(player.grave.findCardsRandom(c => c.isUnit(), 2).map(c => board.toRow(c, player.grave)));
 			return true;
 		}),
-		description: "2 random cards from the graveyard are placed on the battlefield at the start of the third round."
+		description: i18next.t("factions.skellige.description")
 	}
 }

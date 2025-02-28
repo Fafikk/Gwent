@@ -30,5 +30,27 @@
     "ready": "Gotowy",
     "cancel": "Anuluj",
     "copied": "Skopiowano do schowka",
-    "no_server_connection": "Brak połączenia z serwerem"
+    "no_server_connection": "Brak połączenia z serwerem",
+    "factions": {
+        "realms": {
+            "name": "Królestwa Północy",
+            "description": "Za każdym razem, kiedy wygrasz bitwę, weź o jedną kartę więcej."
+        },
+        "nilfgaard": {
+            "name": "Cesarstwo Nilfgaardu",
+            "description": "Jeśli rozgrywka zakończy się remisem, to ty odnosisz zwycięstwo."
+        },
+        "monsters": {
+            "name": "Potwory",
+            "description": "Zatrzymaj losowo wybraną jednostkę na polu bitwy po każdej rundzie."
+        },
+        "scoiatael": {
+            "name": "Scoia'tael",
+            "description": "Zadecyduj, kto rozpoczyna rozgrywkę."
+        },
+        "skellige": {
+            "name": "Skellige",
+            "description": "Dwie przypadkowe jednostki z cmentarza są umieszczane na stole na początku trzeciej rundy."
+        }
+    }
 }
