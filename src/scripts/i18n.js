@@ -18,7 +18,6 @@ i18next
       updatePageContent();
     }
   ).then(() => {
-    console.log("i18next initialized!");
 
     let scripts;
 
@@ -41,8 +40,6 @@ i18next
         "./scripts/factions.js",
         "./scripts/singleplayer/gwent.js"
       ];
-    } else {
-
     }
 
     function loadScripts(scripts) {

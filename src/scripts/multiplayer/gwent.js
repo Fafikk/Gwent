@@ -2769,7 +2769,6 @@ function load() {
 	document.getElementsByTagName("main")[0].style.display = "";
 	inicio();
 	isLoaded = true;
-	console.log("Loaded");
 }
 
 let spacebarPressTimer;
