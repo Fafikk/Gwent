@@ -21,7 +21,7 @@ socket.onmessage = async(event) => {
 		switch (data.type) {
 			case "welcome":
 				playerId = data.playerId;
-				console.log("Welcome, your id is " + playerId);
+				console.log("Player ID: " + playerId);
 				break;
 			
 			// Oponent has joined and the session is ready
