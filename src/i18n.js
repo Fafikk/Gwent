@@ -21,6 +21,7 @@ i18next
     console.log("i18next initialized!");
 
     const scripts = [
+      "https://www.youtube.com/iframe_api",
       "cards.js",
       "decks.js",
       "abilities.js",

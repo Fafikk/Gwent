@@ -2755,14 +2755,14 @@ function inicio() {
 }
 
 var iniciou = false, isLoaded = false;
-window.onload = function() {
-
+function load() {
 	document.getElementById("very_start_bg1").style.display = "none";
 	customizationElem.style.display = "";
 	document.getElementById("toggle-music").style.display = "";
 	document.getElementsByTagName("main")[0].style.display = "";
 	inicio();
 	isLoaded = true;
+	console.log("Loaded");
 }
 
 let spacebarPressTimer;
@@ -2797,3 +2797,5 @@ function startLoadingEffect() {
 function stopLoadingEffect() {
 	passButton.classList.remove('loading');
 }
+
+load();
