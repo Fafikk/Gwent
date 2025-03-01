@@ -39,8 +39,7 @@ i18next
         "decks.js",
         "abilities.js",
         "factions.js",
-        "gwent_sp.js",
-        "singleplayer.js"
+        "gwent_sp.js"
       ];
     } else {
 
