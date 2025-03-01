@@ -78,7 +78,7 @@
         },
         "hero": {
             "name": "Bohater",
-            "description": "Nie jest wrażliwy na żadne karty specjalnei ani umiejętności."
+            "description": "Nie jest wrażliwy na żadne karty specjalne ani umiejętności."
         },
         "decoy": {
             "name": "Manekin do ćwiczeń",
@@ -126,7 +126,7 @@
         },
         "medic": {
             "name": "Medyk",
-            "description": "Wybierz jedną kartę ze swojego stosu kart odrzuconych i zagraj ją natychmiast (bez bohaterów ani kart specjalnych)."
+            "description": "Wybierz jedną kartę ze swojego cmentarza i zagraj ją natychmiast (bez bohaterów ani kart specjalnych)."
         },
         "morale": {
             "name": "Morale",
@@ -172,14 +172,14 @@
             "description": "Dobierz kartę ze stosu kart odrzuconych przeciwnika."
         },
         "emhyr_invader": {
-            "description": "Medyk nie może wybrać, którą kartę ożywić i dobiera losową kartę z kart odrzuconych (dotyczy obu graczy)."
+            "description": "Medyk nie może wybrać, którą kartę ożywić i dobiera losową kartę z cmentarza (dotyczy obu graczy)."
         },
         "eredin_commander": {
             "description": "Podwaja siłę wszystkich twoich jednostek bliskiego starcia (chyba że w tym rzędzie znajduje się również Róg Dowódcy)."
         },
         "eredin_bringer_of_death": {
             "name": "Eredin: Niosący Śmierć",
-            "description": "Przywróć kartę ze swojego stosu kart odrzuconych do ręki."
+            "description": "Przywróć kartę ze swojego cmentarza do ręki."
         },
         "eredin_destroyer": {
             "description": "Odrzuć 2 karty i dobierz 1 kartę według własnego wyboru ze swojej talii."

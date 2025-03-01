@@ -840,6 +840,7 @@ class Deck extends CardContainer {
 	
 	// Sends the top card to the passed hand
 	async draw(hand){
+		tocar("game_buy", false);
 		if (hand === player_op.hand)
 			hand.addCard(this.removeCard(0));
 		else
@@ -926,6 +927,13 @@ class Row extends CardContainer {
 		this.effects = {weather:false, bond: {}, morale: 0, horn: 0, mardroeme: 0};
 		this.elem.addEventListener("click", () => ui.selectRow(this), true);
 		this.elem_special.addEventListener("click", () => ui.selectRow(this), false, true);
+		this.elem.addEventListener("mouseover", function() {
+			tocar("card", false);
+			this.style.boxShadow = "0 0 1.5vw #6d5210";
+		});
+		this.elem.addEventListener("mouseout", function() {
+			this.style.boxShadow = "0 0 0 #6d5210"
+		});
 	}
 	
 	// Override
@@ -942,6 +950,12 @@ class Row extends CardContainer {
 		for (let x of card.placed) 
 			await x(card, this);
 		card.elem.classList.add("noclick");
+		if (card.name === "Clear Weather"){
+			// TODO Sunlight animation
+			tocar("clear", false);
+			await sleep(500);
+			this.clearWeather();
+		}
 		await sleep(600);
 		this.updateScore();
 	}
@@ -989,6 +1003,8 @@ class Row extends CardContainer {
 	
 	// Activates weather effect and visuals
 	addOverlay(overlay){
+		var som = overlay == "fog" || overlay == "rain" ? overlay : overlay == "frost" ? "cold" : "";
+		if (som != "") tocar(som, false);
 		this.effects.weather = true;
 		this.elem_parent.getElementsByClassName("row-weather")[0].classList.add(overlay);
 		this.updateScore();
@@ -1190,6 +1206,7 @@ class Board {
 	
 	// Sends and translates a card from the source to the Deck of the card's holder
 	async toDeck(card, source){
+		tocar("discard", false);
 		await this.moveTo(card, "deck", source);
 	}
 	
@@ -1323,9 +1340,11 @@ class Game {
 		}));
 		
 		await this.runEffects(this.gameStart);
+		tocar("game_opening", false);
 		if (!this.firstPlayer)
 			this.firstPlayer = await this.coinToss();
 		this.initialRedraw();
+		tocar("game_start", false);
 	}
 	
 	// Simulated coin toss to determine who starts game
@@ -1442,9 +1461,11 @@ class Game {
 		
 		endScreen.children[0].className = "";
 		if (player_op.health <= 0 && player_me.health <= 0) {
+			tocar("");
 			endScreen.getElementsByTagName("p")[0].classList.remove("hide");
 			endScreen.children[0].classList.add("end-draw");
 		} else if (player_op.health === 0){
+			tocar("game_win", true);
 			endScreen.children[0].classList.add("end-win");
 		} else {
 			endScreen.children[0].classList.add("end-lose");
@@ -1563,6 +1584,18 @@ class Card {
 	
 	// Animates an ability effect
 	async animate(name, bFade = true, bExpand = true) {
+		var guia = {
+			"medic" : "med",
+			"muster" : "ally",
+			"morale" : "moral",
+			"bond" : "moral"
+		}
+		var temSom = new Array();
+		for (var x in guia) temSom[temSom.length] = x;
+		var literais = ["scorch", "spy", "horn", "shield", "lock", "seize", "knockback", "resilience"];
+		var som = literais.indexOf(name) > -1 ? literais[literais.indexOf(name)] : temSom.indexOf(name) > -1 ? guia[name] : "";
+		if (som != "") tocar(som, false);
+
 		if (name === "scorch") {
 			return await this.scorch(name);
 		}
@@ -1792,11 +1825,13 @@ class UI {
 	
 	// Called when the client cancels out of a card-preview
 	cancel(){
+		tocar("discard", false);
 		this.hidePreview();
 	}
 	
 	// Displays a card preview then enables and highlights potential card destinations
 	showPreview(card) {
+		tocar("explaining", false);
 		this.showPreviewVisuals(card);
 		this.setSelectable(card, true);
 		document.getElementById("click-background").classList.remove("noclick");
@@ -1851,6 +1886,24 @@ class UI {
 		if (!duration)
 			duration = 1200;
 		duration = Math.max(400, duration);
+
+		var guia2 = {
+			"me-pass" : "pass",
+			"win-round" : "round_win",
+			"lose-round" : "round_lose",
+			"me-turn" : "turn_me",
+			"op-turn" : "turn_op",
+			"op-leader" : "turn_op",
+			"op-white-flame" : "turn_op",
+			"nilfgaard-wins-draws" : "turn_op",
+			"sv-err": "server_error",
+			"win-opleft" : "oponent_left"
+		}
+		var temSom = new Array();
+		for (var x in guia2) temSom[temSom.length] = x;
+		var som = temSom.indexOf(name) > -1 ? guia2[name] : name == "round-start" && game.roundHistory.length == 0 ? "round1_start" : "";
+		if (som != "") tocar(som, false);
+
 		const fadeSpeed = 150;
 		this.notif_elem.children[0].id = "notif-" + name;
 		fadeIn(this.notif_elem, fadeSpeed);
@@ -2040,6 +2093,7 @@ class Carousel {
 		
 		this.elem.classList.remove("hide");
 		ui.enablePlayer(true);
+		tocar("explaining", false);
 	}
 	
 	// Called by the client to cycle cards displayed by n
@@ -2057,6 +2111,9 @@ class Carousel {
 			this.elem.classList.add("hide");
 		if (this.count <= 0)
 			ui.enablePlayer(false);
+
+		tocar("redraw", false);
+
 		await this.action(this.container, this.indices[this.index]);
 		if (this.isLastSelection() && !this.cancelled)
 			return this.exit();
@@ -2067,6 +2124,7 @@ class Carousel {
 	cancel(){
 		if (this.bExit){
 			this.cancelled = true;
+			tocar("discard", false);
 			this.exit();
 		}
 		ui.enablePlayer(true);
@@ -2196,8 +2254,13 @@ class DeckMaker {
 	setFaction(faction_name, silent){
 		if (!silent && this.faction === faction_name)
 			return false;
-		if (!silent && !confirm("Changing factions will clear the current deck. Continue? "))
-			return false;
+		if (!silent){
+			tocar("warning", false);
+			if (!confirm("Changing factions will clear the current deck. Continue? ")) {
+				tocar("warning", false);
+				return false;
+			}
+		}
 		this.elem.getElementsByTagName("h1")[0].innerHTML = factions[faction_name].name;
 		this.elem.getElementsByTagName("h1")[0].style.backgroundImage = iconURL("deck_shield_" + faction_name);
 		document.getElementById("faction-description").innerHTML = factions[faction_name].description;
@@ -2348,9 +2411,11 @@ class DeckMaker {
 	// Called when client selects s a preview card. Moves it from bank to deck or vice-versa then updates;
 	select(index, isBank){
 		if (isBank) {
+			tocar("menu_buy", false);
 			this.add(index, this.deck);
 			this.remove(index, this.bank);
 		} else {
+			tocar("discard", false);
 			this.add(index, this.bank);
 			this.remove(index, this.deck);
 		}
@@ -2667,6 +2732,23 @@ function sleepUntil(predicate, ms) {
 // Initializes the interractive YouTube object
 function onYouTubeIframeAPIReady() {
 	ui.initYouTube();
+}
+
+var lastSound = "";
+
+function tocar(arquivo, pararMusica) {
+	if (arquivo != lastSound && arquivo != "") {
+		var s = new Audio("sfx/" + arquivo + ".mp3");
+        if (pararMusica && ui.youtube && ui.youtube.getPlayerState() === YT.PlayerState.PLAYING) {
+			ui.youtube.pauseVideo();
+			ui.toggleMusic_elem.classList.add("fade");
+		}
+		lastSound = arquivo;
+		s.play();
+		setTimeout(function() {
+			lastSound = "";
+		}, 50);
+	}
 }
 
 /*----------------------------------------------------*/
