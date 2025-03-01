@@ -20,15 +20,31 @@ i18next
   ).then(() => {
     console.log("i18next initialized!");
 
-    const scripts = [
-      "https://www.youtube.com/iframe_api",
-      "cards.js",
-      "decks.js",
-      "abilities.js",
-      "factions.js",
-      "gwent.js",
-      "session.js"
-    ];
+    let scripts;
+
+    if(game_type == "multiplayer") {
+      scripts = [
+        "https://www.youtube.com/iframe_api",
+        "cards.js",
+        "decks.js",
+        "abilities.js",
+        "factions.js",
+        "gwent_mp.js",
+        "session.js"
+      ];
+    } else if(game_type == "singleplayer") {
+      scripts = [
+        "https://www.youtube.com/iframe_api",
+        "cards.js",
+        "decks.js",
+        "abilities.js",
+        "factions.js",
+        "gwent_sp.js",
+        "singleplayer.js"
+      ];
+    } else {
+
+    }
 
     function loadScripts(scripts) {
       scripts.forEach(src => {

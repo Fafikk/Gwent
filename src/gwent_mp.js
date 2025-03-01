@@ -2745,12 +2745,19 @@ function cartaNaLinha(id, carta) {
 	}
 }
 
+function openFullscreen() {
+	let elem = document.documentElement;
+	if (elem.requestFullscreen) elem.requestFullscreen();
+	else if (elem.mozRequestFullScreen) elem.mozRequestFullScreen();
+	else if (elem.webkitRequestFullscreen) elem.webkitRequestFullscreen();
+	else if (elem.msRequestFullscreen) elem.msRequestFullscreen();
+}
+
 function inicio() {
 	var classe = document.getElementsByClassName("abs");
 	for (var i = 0; i < classe.length; i++) classe[i].style.display = "none";
 	iniciou = true;
 	tocar("menu_opening", false);
-	// openFullscreen();
 	iniciarMusica();
 }
 
@@ -2797,5 +2804,9 @@ function startLoadingEffect() {
 function stopLoadingEffect() {
 	passButton.classList.remove('loading');
 }
+
+window.addEventListener('click', function () {
+	openFullscreen();
+})
 
 load();
