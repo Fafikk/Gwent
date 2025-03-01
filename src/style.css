@@ -2111,7 +2111,7 @@ html {
 	z-index: 87;
 	top: 95%;
 	left: 47%;
-	width: 6%;
+	width: fit-content;
 	height: 3%;
 	font-size: 0.98vw;
 	white-space: nowrap;

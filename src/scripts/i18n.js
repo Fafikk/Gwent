@@ -25,21 +25,21 @@ i18next
     if(game_type == "multiplayer") {
       scripts = [
         "https://www.youtube.com/iframe_api",
-        "cards.js",
-        "decks.js",
-        "abilities.js",
-        "factions.js",
-        "gwent_mp.js",
-        "session.js"
+        "./scripts/cards.js",
+        "./scripts/multiplayer/decks.js",
+        "./scripts/multiplayer/abilities.js",
+        "./scripts/factions.js",
+        "./scripts/multiplayer/gwent.js",
+        "./scripts/multiplayer/session.js"
       ];
     } else if(game_type == "singleplayer") {
       scripts = [
         "https://www.youtube.com/iframe_api",
-        "cards.js",
-        "decks.js",
-        "abilities.js",
-        "factions.js",
-        "gwent_sp.js"
+        "./scripts/cards.js",
+        "./scripts/singleplayer/decks.js",
+        "./scripts/singleplayer/abilities.js",
+        "./scripts/factions.js",
+        "./scripts/singleplayer/gwent.js"
       ];
     } else {
 

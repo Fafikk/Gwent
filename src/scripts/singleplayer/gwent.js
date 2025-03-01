@@ -2,8 +2,6 @@
 
 class Controller {}
 
-const customizationElem = document.getElementById("deck-customization");
-
 // Makes decisions for the AI opponent player
 class ControllerAI {
 	constructor(player) {
@@ -2179,7 +2177,7 @@ class DeckMaker {
 		this.faction = "realms";
 		this.setFaction(this.faction, true);
 		
-		let start_deck = premade_deck.find(d => d.faction === this.faction);
+		let start_deck = JSON.parse(premade_deck[0]);
 		start_deck.cards = start_deck.cards.map(c => ({index: c[0], count: c[1]}) );
 		this.setLeader(start_deck.leader);
 		this.makeBank(this.faction, start_deck.cards);
@@ -2217,7 +2215,7 @@ class DeckMaker {
 	
 	// Called when client selects a leader for their deck
 	setLeader(index){
-		this.leader = this.leaders.find( l => l.index == index);
+		this.leader = this.leaders.filter( l => l.index == index)[0];
 		this.leader_elem.children[1].style.backgroundImage = largeURL(this.leader.card.deck + "_" + this.leader.card.filename);
 	}
 	
@@ -2337,18 +2335,10 @@ class DeckMaker {
 		});
 		let index = container.cards.reduce((a,c,i) => c.filename === this.faction ? i : a, 0);
 		ui.queueCarousel(container, 1, (c,i) => {
-			const card_faction_name = c.cards[i].filename;
-			let change = this.setFaction(card_faction_name);
+			let change = this.setFaction(c.cards[i].filename);
 			if (!change)
 				return;
-			const faction_premade_deck = premade_deck.find(d => d.faction === card_faction_name)
-
-			if (faction_premade_deck) {
-				if (!faction_premade_deck?.cards[0].index)
-					faction_premade_deck.cards = faction_premade_deck.cards.map(c => ({index: c[0], count: c[1]}) );
-				this.makeBank(card_faction_name, faction_premade_deck.cards);
-			} else	
-				this.makeBank(card_faction_name);
+			this.makeBank(c.cards[i].filename);
 			this.update();
 		}, () => true, false, true);
 		Carousel.curr.index = index;
@@ -2358,11 +2348,9 @@ class DeckMaker {
 	// Called when client selects s a preview card. Moves it from bank to deck or vice-versa then updates;
 	select(index, isBank){
 		if (isBank) {
-			tocar("menu_buy", false);
 			this.add(index, this.deck);
 			this.remove(index, this.bank);
 		} else {
-			tocar("discard", false);
 			this.add(index, this.bank);
 			this.remove(index, this.deck);
 		}
@@ -2394,33 +2382,32 @@ class DeckMaker {
 	
 	// Verifies current deck, creates the players and their decks, then starts a new game
 	startNewGame(){
-		let warning = "";;
+		let warning = "";
 		if (this.stats.units < 22)
 			warning += "Your deck must have at least 22 unit cards. \n";
 		if (this.stats.special > 10)
 			warning += "Your deck must have no more than 10 special cards. \n";
-			
 		if (warning != "")
 			return alert(warning);
-
+		
 		let me_deck = { 
 			faction: this.faction,
 			leader: card_dict[this.leader.index], 
 			cards: this.deck.filter(x => x.count > 0)
 		};
-
-        let op_deck = JSON.parse( premade_deck[randomInt(Object.keys(premade_deck).length)] );
+		
+		let op_deck = JSON.parse( premade_deck[randomInt(Object.keys(premade_deck).length)] );
 		op_deck.cards = op_deck.cards.map(c => ({index:c[0], count:c[1]}) );
 		//op_deck.leader = card_dict[op_deck.leader];
 		
 		let leaders = card_dict.filter(c => c.row === "leader" && c.deck === op_deck.faction);
 		op_deck.leader = leaders[randomInt(leaders.length)];
 		//op_deck.leader = card_dict.filter(c => c.row === "leader")[12];
-
-		player_me = new Player(0, "you", me_deck );
+		
+		player_me = new Player(0, "Player 1", me_deck );
 		player_op = new Player(1, "Player 2", op_deck);
 		
-        this.elem.classList.add("hide");
+		this.elem.classList.add("hide");
 		game.startGame();
 	}
 	
@@ -2429,12 +2416,12 @@ class DeckMaker {
 		let obj = {
 			faction: this.faction,
 			leader: this.leader.index, 
-			cards: this.deck.filter(x => x.count > 0).map(x => [x.index, x.count])
+			cards: this.deck.filter(x => x.count > 0).map(x => [x.index, x.count] )
 		};
 		return JSON.stringify(obj);
 	}
 	
-	// Called by the client to download the current deck as a JSON file
+	// Called by the client to downlaod the current deck as a JSON file
 	downloadDeck(){
 		let json = this.deckToJSON();
 		let str = "data:text/json;charset=utf-8," + encodeURIComponent(json);
@@ -2498,9 +2485,8 @@ class DeckMaker {
 		if (warning && !confirm(warning + "\n\n\Continue importing deck?"))
 			return;
 		this.setFaction(deck.faction, true);
-		socket.send(JSON.stringify({ type: "opChangeFaction", faction: deck.faction }));
 		if (card_dict[deck.leader].row === "leader" && deck.faction === card_dict[deck.leader].deck){
-			this.leader = this.leaders.find(c => c.index === deck.leader);
+			this.leader = this.leaders.filter(c => c.index === deck.leader)[0];
 			this.leader_elem.children[1].style.backgroundImage = largeURL(this.leader.card.deck + "_" + this.leader.card.filename);
 		}
 		this.makeBank(deck.faction, cards);
@@ -2681,23 +2667,6 @@ function sleepUntil(predicate, ms) {
 // Initializes the interractive YouTube object
 function onYouTubeIframeAPIReady() {
 	ui.initYouTube();
-}
-
-var lastSound = "";
-
-function tocar(arquivo, pararMusica) {
-	if (arquivo != lastSound && arquivo != "") {
-		var s = new Audio("sfx/" + arquivo + ".mp3");
-        if (pararMusica && ui.youtube && ui.youtube.getPlayerState() === YT.PlayerState.PLAYING) {
-			ui.youtube.pauseVideo();
-			ui.toggleMusic_elem.classList.add("fade");
-		}
-		lastSound = arquivo;
-		s.play();
-		setTimeout(function() {
-			lastSound = "";
-		}, 50);
-	}
 }
 
 /*----------------------------------------------------*/

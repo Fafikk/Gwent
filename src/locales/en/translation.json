@@ -32,6 +32,7 @@
     "copied": "Copied to clipboard",
     "no_server_connection": "No server connection",
     "loading_info": "If page is not loading for long time, refresh the page.",
+    "start_game": "Start game",
     "factions": {
         "realms": {
             "name": "Northern Realms",
