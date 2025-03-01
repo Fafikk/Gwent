@@ -45,27 +45,23 @@ div.abs {
 }
 
 #very_start_bg1 {
-	background-image: url(img/start.jpg);
-	background-size: 100% auto;
-	background-repeat: no-repeat;
+	background-color: #000;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
-#very_start_bg2 {
-	top: 3%;
-	left: 2%;
-	width: 32%;
-	height: 94%;
-	border: solid 4px white;
-}
-
-#very_start {
-	position:absolute;
-	height:auto;
-	font-size: 20px;
-	color: #DDD;
-	z-index: 3000;
+.loading_div {
+	color: #fff;
 	text-align: center;
-	font-weight: bold;
+}
+
+.loading_div h1 {
+	font-size: 32px;
+}
+
+.loading_div h2 {
+	font-size: 24px;
 }
 
 ::selection {

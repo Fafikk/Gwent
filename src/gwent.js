@@ -2757,14 +2757,11 @@ function inicio() {
 var iniciou = false, isLoaded = false;
 window.onload = function() {
 
-	document.getElementById("load_text").style.display = "none";
-	document.getElementById("button_start").style.display = "inline-block";
+	document.getElementById("very_start_bg1").style.display = "none";
 	customizationElem.style.display = "";
 	document.getElementById("toggle-music").style.display = "";
 	document.getElementsByTagName("main")[0].style.display = "";
-	document.getElementById("button_start").addEventListener("click", function() {
-		inicio();
-    });
+	inicio();
 	isLoaded = true;
 }
 

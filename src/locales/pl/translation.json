@@ -31,6 +31,7 @@
     "cancel": "Anuluj",
     "copied": "Skopiowano do schowka",
     "no_server_connection": "Brak połączenia z serwerem",
+    "loading_info": "Jeśli strona nie ładuje się przez długi czas, odśwież stronę.",
     "factions": {
         "realms": {
             "name": "Królestwa Północy",
