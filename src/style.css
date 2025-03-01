@@ -2100,7 +2100,7 @@ html {
 	z-index: 87;
 	top: 96%;
 	left: 53.35%;
-	width: 3%;
+	width: fit-content;
 	height: 3%;
 	font-size: 0.98vw;
 	white-space: nowrap;

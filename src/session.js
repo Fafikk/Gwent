@@ -155,7 +155,7 @@ socket.addEventListener('message', (event) => {
     createdSessionId = data.code;
     sessionIdDiv.classList.remove("hidden");
     
-    sessionIdDiv.children[0].innerText = `Session: ${createdSessionId}`
+    sessionIdDiv.children[0].innerText = i18next.t("session_code") + ` ${createdSessionId}`
     socket.removeEventListener('message', () => {});
   }
 });
