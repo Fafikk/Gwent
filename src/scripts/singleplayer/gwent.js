@@ -1727,6 +1727,14 @@ class UI {
 		this.toggleMusic_elem = document.getElementById("toggle-music");
 		this.toggleMusic_elem.classList.add("fade");
 		this.toggleMusic_elem.addEventListener("click", () => this.toggleMusic(), false);
+
+		// Pass round when spacebar is pressed
+		window.addEventListener("keydown", (e) => {
+			if (e.keyCode == 32 || e.code == "Space"){
+				e.preventDefault();
+				player_me.passRound();
+			}
+		});
 	}
 	
 	// Enables or disables client interration

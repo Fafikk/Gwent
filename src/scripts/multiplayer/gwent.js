@@ -1526,10 +1526,20 @@ class UI {
 		this.preview = document.getElementsByClassName("card-preview")[0];
 		this.previewCard = null;
 		this.lastRow = null;
+
+		// Handle pass button
 		passButton.addEventListener("click", () => {
 			socket.send(JSON.stringify({ type: "pass", player: playerId }));
 			player_me.passRound();
 		});
+		window.addEventListener("keydown", (e) => {
+			if (e.keyCode == 32 || e.code == "Space"){
+				e.preventDefault();
+				socket.send(JSON.stringify({ type: "pass", player: playerId }));
+				player_me.passRound();
+			}
+		});
+
 		document.getElementById("click-background").addEventListener("click", () => ui.cancel(), false);
 		this.youtube;
 		this.ytActive;

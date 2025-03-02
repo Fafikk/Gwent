@@ -1,5 +1,3 @@
-const ws = new WebSocket('ws://localhost:8080');
-
 const noServerWarningElement = document.getElementById("no-server");
 
 const btnCreateElem = document.getElementById("create-game");
@@ -30,14 +28,14 @@ sessionIdDiv.classList.add("hidden");
 
 inputGroup.classList.add("hidden");
 
-ws.onopen = () => {
+socket.onopen = () => {
   console.log('Connected to the server');
   noServerWarningElement.classList.add("hidden");
   btnCreateElem.classList.remove("disabled");
   btnJoinElem.classList.remove("disabled");
 };
 
-ws.onclose = () => {
+socket.onclose = () => {
   console.log('Disconnected from the server');
   noServerWarningElement.classList.remove("hidden");
   btnCreateElem.classList.remove("hidden");
@@ -63,7 +61,7 @@ function createGame () {
 
   btnReadyElem.classList.remove("hidden");
   btnCancelElem.classList.remove("hidden");
-  ws.send(JSON.stringify({ type: "createSession" }));
+  socket.send(JSON.stringify({ type: "createSession" }));
 }
 
 function joinGame() {
@@ -79,7 +77,7 @@ function joinGame() {
     const sessionCode = inputField.value.trim();
 
     if (sessionCode.length) {
-      ws.send(JSON.stringify({ type: "joinSession", code: sessionCode }));
+      socket.send(JSON.stringify({ type: "joinSession", code: sessionCode }));
       const joined = await findSession();
 
       if (joined) {
@@ -101,15 +99,15 @@ async function findSession() {
       const data = JSON.parse(event.data);
 
       if (data.type === 'sessionJoined') {
-        ws.removeEventListener('message', handleMessage);
+        socket.removeEventListener('message', handleMessage);
         resolve(true);
       } else if (data.type === 'sessionInvalid') {
-        ws.removeEventListener('message', handleMessage);
+        socket.removeEventListener('message', handleMessage);
         resolve(false);
       }
     };
 
-    ws.addEventListener('message', handleMessage);
+    socket.addEventListener('message', handleMessage);
   });
 }
 
@@ -125,11 +123,11 @@ function cancelSession () {
 
   if (createdSessionId) {
     console.log("Cancelled Session of code: " + createdSessionId);
-    ws.send(JSON.stringify({ type: "cancelSession", code: createdSessionId }));
+    socket.send(JSON.stringify({ type: "cancelSession", code: createdSessionId }));
     createdSessionId = null;
   } else if (joinedSessionId) {
     console.log("Left Session of code: " + joinedSessionId);
-    ws.send(JSON.stringify({ type: "leaveSession", code: joinedSessionId }));
+    socket.send(JSON.stringify({ type: "leaveSession", code: joinedSessionId }));
     joinedSessionId = null;
   }
 }
@@ -150,7 +148,7 @@ function copySessionId () {
   });
 }
 
-ws.addEventListener('message', (event) => {
+socket.addEventListener('message', (event) => {
   const data = JSON.parse(event.data);
 
   if (data.type === 'sessionCreated') {
@@ -158,6 +156,6 @@ ws.addEventListener('message', (event) => {
     sessionIdDiv.classList.remove("hidden");
     
     sessionIdDiv.children[0].innerText = i18next.t("session_code") + ` ${createdSessionId}`
-    ws.removeEventListener('message', () => {});
+    socket.removeEventListener('message', () => {});
   }
 });
