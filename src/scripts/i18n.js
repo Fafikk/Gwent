@@ -28,8 +28,8 @@ i18next
         "./scripts/multiplayer/decks.js",
         "./scripts/multiplayer/abilities.js",
         "./scripts/factions.js",
-        "./scripts/multiplayer/session.js",
-        "./scripts/multiplayer/gwent.js"
+        "./scripts/multiplayer/gwent.js",
+        "./scripts/multiplayer/session.js"
       ];
     } else if(game_type == "singleplayer") {
       scripts = [
