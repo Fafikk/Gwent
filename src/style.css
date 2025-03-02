@@ -2121,6 +2121,10 @@ html {
 	border: 0.1vw ridge rgb(30,30,30);
 }
 
+.start-game2 {
+	width: fit-content !important;
+}
+
 #cancel-game {
 	position: absolute;
 	z-index: 87;

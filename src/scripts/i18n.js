@@ -24,10 +24,11 @@ i18next
     if(game_type == "multiplayer") {
       scripts = [
         "https://www.youtube.com/iframe_api",
+        "./scripts/socket.js",
         "./scripts/cards.js",
-        "./scripts/multiplayer/decks.js",
-        "./scripts/multiplayer/abilities.js",
         "./scripts/factions.js",
+        "./scripts/multiplayer/abilities.js",
+        "./scripts/multiplayer/decks.js",
         "./scripts/multiplayer/gwent.js",
         "./scripts/multiplayer/session.js"
       ];
@@ -35,9 +36,9 @@ i18next
       scripts = [
         "https://www.youtube.com/iframe_api",
         "./scripts/cards.js",
-        "./scripts/singleplayer/decks.js",
-        "./scripts/singleplayer/abilities.js",
         "./scripts/factions.js",
+        "./scripts/singleplayer/abilities.js",
+        "./scripts/singleplayer/decks.js",
         "./scripts/singleplayer/gwent.js"
       ];
     }
