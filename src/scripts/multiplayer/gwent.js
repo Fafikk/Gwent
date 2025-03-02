@@ -1138,7 +1138,7 @@ class Game {
 	
 	// Allows the player to swap out up to two cards from their iniitial hand
 	async initialRedraw(){
-		await ui.queueCarousel(player_me.hand, 2, async (c, i) => await player_me.deck.swap(c, c.removeCard(i)), c => true, true, true, "Choose up to 2 cards to redraw.");
+		await ui.queueCarousel(player_me.hand, 2, async (c, i) => await player_me.deck.swap(c, c.removeCard(i)), c => true, true, true, i18next.t("redraw"));
 		ui.enablePlayer(false);
 
 		socket.send(JSON.stringify({ type: "initial_reDraw", hand: removeCircularReferences(player_me.hand.cards), deck: removeCircularReferences(player_me.deck.cards) }));
@@ -1340,13 +1340,13 @@ class Card {
 		}
 		
 		if (this.row === "leader")
-			this.desc_name = "Leader Ability";
+			this.desc_name = i18next.t("leader_ability");
 		else if (this.abilities.length > 0)
 			this.desc_name = ability_dict[this.abilities[this.abilities.length-1]].name;
 		else if (this.row==="agile")
-			this.desc_name = "agile";
+			this.desc_name = i18next.t("abilities.agile.name");
 		else if (this.hero)
-			this.desc_name = "hero";
+			this.desc_name = i18next.t("abilities.hero.name");
 		else
 			this.desc_name = "";
 		
@@ -2110,7 +2110,7 @@ class DeckMaker {
 			return false;
 		if (!silent) {
 			tocar("warning", false);
-			if (!confirm("Changing factions will clear the current deck. Continue? ")) {
+			if (!confirm(i18next.t("changing_factions_confirm"))) {
 				tocar("warning", false);
 				return false;
 			}
@@ -2325,9 +2325,9 @@ class DeckMaker {
 		
 		let warning = "";;
 		if (this.stats.units < 22)
-			warning += "Your deck must have at least 22 unit cards. \n";
+			warning += i18next.t("units_22");
 		if (this.stats.special > 10)
-			warning += "Your deck must have no more than 10 special cards. \n";
+			warning += i18next.t("special_10");
 			
 		if (warning != "")
 			return alert(warning);
@@ -2381,7 +2381,7 @@ class DeckMaker {
 			try {
 				this.deckFromJSON(e.target.result);
 			} catch (e) {
-				alert("Uploaded deck is not formatted correctly!");
+				alert(i18next.t("incorrect_format"));
 			}
 		}
 		fr.readAsText(files.item(0));
@@ -2395,34 +2395,34 @@ class DeckMaker {
 		try {
 			deck = JSON.parse(json);
 		} catch (e) {
-			alert("Uploaded deck is not parsable!");
+			alert(i18next.t("deck_parsing_error"));
 			return;
 		}
 		let warning = "";
 		if (card_dict[deck.leader].row !== "leader")
 			warning += "'" + card_dict[deck.leader].name + "' is cannot be used as a leader\n";
 		if (deck.faction != card_dict[deck.leader].deck)
-			warning += "Leader '" + card_dict[deck.leader].name + "' doesn't match deck faction '" + deck.faction + "'.\n";
+			warning += i18next.t("leader") + " '" + card_dict[deck.leader].name + i18next.t("incorrect_leader") + deck.faction + "'.\n";
 		
 		let cards = deck.cards.filter( c => {
 			let card = card_dict[c[0]];
 			if (!card) {
-				warning += "ID " + c[0] + " does not correspond to a card.\n";
+				warning += "ID " + c[0] + i18next.t("card_correspond_error");
 				return false
 			}
 			if (![deck.faction, "neutral", "special", "weather"].includes(card.deck)) {
-				warning += "'" + card.name + "' cannot be used in a deck of faction type '" + deck.faciton +"'\n";
+				warning += "'" + card.name + i18next.t("cannot_be_used") + deck.faciton +"'\n";
 				return false;
 			}
 			if (card.count < c[1]) {
-				warning += "Deck contains " + c[1] + "/" + card.count + " available " + card_dict[c.index].name + " cards\n";
+				warning += i18next.t("deck_contains") + c[1] + "/" + card.count + i18next.t("available") + card_dict[c.index].name + i18next.t("cards");
 				return false;
 			}
 			return true;
 		})
 		.map(c => ({index:c[0], count:Math.min(c[1], card_dict[c[0]].count)}) );
 		
-		if (warning && !confirm(warning + "\n\n\Continue importing deck?"))
+		if (warning && !confirm(warning + i18next.t("continue_importing")))
 			return;
 		this.setFaction(deck.faction, true);
 		socket.send(JSON.stringify({ type: "opChangeFaction", faction: deck.faction }));
