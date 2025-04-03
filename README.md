@@ -1,3 +1,6 @@
+# Information
+This project is no longer being developed due to poor code quality.
+
 # Gwent
 ![cover](https://user-images.githubusercontent.com/26311830/116256903-f1599b00-a7b6-11eb-84a1-16dcb5c9bfc6.jpg)
 
